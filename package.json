@@ -1,12 +1,13 @@
 {
   "name": "easy-local-storage-json",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "build/EasyLocalStorageJSON.js",
   "source": "src/EasyLocalStorageJSON.ts",
   "scripts": {
     "test": "jest",
-    "build": "parcel ./src/EasyLocalStorageJSON.ts --dist-dir ./build/"
+    "build": "parcel ./src/EasyLocalStorageJSON.ts --dist-dir ./build/",
+    "prepare": "npm run test"
   },
   "keywords": [],
   "author": "",
