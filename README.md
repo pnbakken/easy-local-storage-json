@@ -4,6 +4,8 @@ This is a set of functions I end up recreating every time I use localStorage for
 
 ## How does it work
 
+``` npm install easy-local-storage-json ```
+
 The main setting and getting functions take a single object and a key and stores it in an array that can be expanded or deleted from as required. When it retrieves something from storage it converts to a JSON object array.
 
 ### Disclaimer
