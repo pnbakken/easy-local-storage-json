@@ -6,10 +6,12 @@ export function getFromStorage(key:string): JSON | null {
     } else return null;
 }
 
-export function saveToStorage(key: string, data: Object): void {
+export function saveToStorage(key: string, data: any): void {
     if (keyInStorage(key)) {
         const storedData = getFromStorage(key);
-        storedData.push(data);
+        if (Array.isArray(data)){
+            data.forEach(d => storedData!.push(d));
+        }else storedData!.push(data);
         storage.setItem(key, JSON.stringify(storedData));
     } else {
         storage.setItem(key, JSON.stringify([data]));
@@ -19,7 +21,7 @@ export function saveToStorage(key: string, data: Object): void {
 export function deleteItemFromStorage(key:string, identifier: any, token:string = "id"): void  {
     if (keyInStorage(key)) {
         const storedData = getFromStorage(key);
-        const newData = storedData.filter(item => item[token] !== identifier);
+        const newData = storedData!.filter(item => item[token] !== identifier);
         storage.setItem(key, JSON.stringify(newData));
     }
 }

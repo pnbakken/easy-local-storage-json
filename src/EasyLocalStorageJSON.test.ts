@@ -72,3 +72,38 @@ describe("Clearing everything from storage works", () => {
         expect(getFromStorage("test")).toBe(null);
     });
 });
+
+describe("Save funtion works with an array of items", () => {
+    it("Takes a single item and wraps it in an array", () => {
+        const testObject = {"name": "something"};
+        saveToStorage("test", testObject);
+        expect(getFromStorage("test")).toEqual([testObject]);
+        clearStorage();
+    });
+
+    it("Then takes an array of items which it flattens and inserts the items one by one to the existing JSON array", () => {
+        const testObject = {"name": "something"};
+        saveToStorage("test", testObject);
+        const testObject2 = {"name": "whatever"};
+        const testObject3 = {"name": "something else"};
+        saveToStorage("test", [testObject2, testObject3]);
+        expect(getFromStorage("test")).toEqual([testObject, testObject2, testObject3]);
+        clearStorage();
+    })
+
+    it("Deals with storing separate arrays by being passed arrays of arrays", () => {
+        const testObject = {"name": "this"};
+        saveToStorage("test", testObject);
+        const testObject2 = {"name": "whatever"};
+        const testObject3 = {"name": "something else"};
+        saveToStorage("test", [testObject2, testObject3]);
+        const testObject4 = {"name": "whatever"};
+        const testObject5 = {"name": "something else"};
+        const testArray = [testObject4, testObject5];
+        saveToStorage("test", [testArray]);
+        const testObject6 = {"name": "sick of these"};
+        saveToStorage("test", testObject6);
+        expect(getFromStorage("test")).toEqual([testObject, testObject2, testObject3, [testObject4, testObject5], testObject6,]);
+        clearStorage();
+    })
+})
