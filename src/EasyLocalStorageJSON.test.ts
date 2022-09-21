@@ -1,6 +1,8 @@
 import { clearStorage, deleteItemFromStorage, deleteKeyFromStorage, getFromStorage, itemInStorage, keyInStorage, saveToStorage } from "./EasyLocalStorageJSON";
 
 describe("Adding to storage works as expected", () => {
+    clearStorage();
+
     it("Takes an object and return the same object wrapped in an array", () => {
         const testObject = {"name": "test"};
         saveToStorage("test", testObject);
@@ -73,6 +75,7 @@ describe("Clearing everything from storage works", () => {
     });
 });
 
+/*
 describe("Save funtion works with an array of items", () => {
     it("Takes a single item and wraps it in an array", () => {
         const testObject = {"name": "something"};
@@ -91,7 +94,7 @@ describe("Save funtion works with an array of items", () => {
         clearStorage();
     })
 
-    it("Deals with storing separate arrays by being passed arrays of arrays", () => {
+    it("Deals with storing separate arrays by being passed an array of arrays", () => {
         const testObject = {"name": "this"};
         saveToStorage("test", testObject);
         const testObject2 = {"name": "whatever"};
@@ -105,5 +108,31 @@ describe("Save funtion works with an array of items", () => {
         saveToStorage("test", testObject6);
         expect(getFromStorage("test")).toEqual([testObject, testObject2, testObject3, [testObject4, testObject5], testObject6,]);
         clearStorage();
-    })
-})
+    });
+});
+
+
+describe("The delete function works with items and array inside arrays", () => {
+    it("Stores several arrays successfully", () => {
+        const testArray = [{"name":1},{"name":2}];
+        const testArray2 = [{"name":3}, {"name": 4}];
+        saveToStorage("test", [testArray, testArray2]);
+        expect(getFromStorage("test")).toEqual([testArray, testArray2]);
+        clearStorage();
+    });
+    it("Can match delete tokens several layers deep into an array", () => {
+        const testArray = [{"id": 1}, {"id": 2}];
+        saveToStorage("test", [testArray]);
+        const testArray2 = [{"id": 3}, {"id": 4}];
+        const controlArray = [{"id": 4}];
+        saveToStorage("test", [testArray2]);
+        expect(getFromStorage("test")).toEqual([testArray, testArray2]);
+        deleteItemFromStorage("test", 3);
+        expect(getFromStorage("test")).toEqual([testArray]);
+        clearStorage();
+    });
+
+});
+
+
+*/
